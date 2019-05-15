@@ -50,4 +50,12 @@ class Tower {
 
 }
 
-export { Tower };
+function printTower(tower: Tower) {
+    let resultTower = tower.getHeight();
+    if (resultTower) {
+        return resultTower.toString();
+    }
+    return "";    
+}
+
+export { Tower, printTower };

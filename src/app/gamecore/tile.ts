@@ -62,4 +62,18 @@ class Tile {
     }
 }
 
-export { Tile };
+function printTile(tile: Tile) {
+    let resultTile: string = "";
+    if (tile.tower) {
+        resultTile = `| TH: ${tile.tower.getHeight.toString()}`;
+    }
+    if (tile.builder) {
+        resultTile += ` | BN: ${tile.builder.playerNum.toString()}`;
+    }
+    else {
+        resultTile += ` | BN: 0`;
+    }
+
+}
+
+export { Tile, printTile };
