@@ -61,3 +61,5 @@ class Tile {
         }
     }
 }
+
+export { Tile };
