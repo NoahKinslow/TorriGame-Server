@@ -1,0 +1,32 @@
+{
+  "name": "torricli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/server.js",
+  "scripts": {
+    "start": "node lib/server.js",
+    "start:watch": "nodemon lib/server.js",
+    "start:debug": "nodemon --inspect lib/server.js",
+    "clean": "rm -rf sessions",
+    "clean:deep": "rm -rf lib sessions node_modules package-lock.json",
+    "compile": "tsc",
+    "compile:watch": "tsc --watch",
+    "lint": "tslint -e node_modules -p tsconfig.json -t stylish",
+    "lint:fix": "tslint -e node_modules -p tsconfig.json --fix"
+  },
+  "author": "Noah Kinslow",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.16.8",
+    "@types/express": "^4.11.1",
+    "@types/morgan": "^1.7.35",
+    "@types/node": "^9.4.1",
+    "tslint": "^5.14.0",
+    "typescript": "^2.7.1"
+  }
+}
