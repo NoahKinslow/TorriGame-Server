@@ -22,13 +22,13 @@ function moveBuilder(board: Board, builder: Builder, tileFromName: String, tileT
     // Get tiles from map
     let tileFrom = board.getBoardMap().get(tileFromName);
     let tileTo = board.getBoardMap().get(tileToName);
-    if (tileTo) {
+    if (tileTo !== undefined) {
         // Check that the tile is not blocked
         if (!tileTo.isTileBlocked()) {
             // Update builder location
             builder.setCurrentTile(tileToName);
-            if (tileFrom) {
-                tileFrom.setBuilder(null);
+            if (tileFrom !== undefined) {
+                tileFrom.setBuilder(undefined);
             }
             tileTo.setBuilder(builder);
             return true;
@@ -40,9 +40,9 @@ function moveBuilder(board: Board, builder: Builder, tileFromName: String, tileT
 // Check if a player has won
 function isGameOver(board: Board, builder: Builder) {
     let currentTileName = builder.getCurrentTile();
-    if (currentTileName) {
+    if (currentTileName !== undefined) {
         let currentTile = board.getBoardMap().get(currentTileName);
-        if (currentTile) {
+        if (currentTile !== undefined) {
             return hasPlayerWon(currentTile);
         }
     }

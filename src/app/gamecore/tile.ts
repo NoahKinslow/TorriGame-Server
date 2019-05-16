@@ -3,34 +3,34 @@ import { Tower } from './tower'
 
 class Tile {
     
-    builder: Builder | null = null;
-    tower: Tower | null = null;
+    builder: Builder | undefined = undefined;
+    tower: Tower | undefined = undefined;
 
     constructor() {
     }
 
     getBuilder() {
-        if (this.builder) {
+        if (this.builder !== undefined) {
             return this.builder;
         }
     }
 
-    setBuilder(newBuilder: Builder | null) {
+    setBuilder(newBuilder: Builder | undefined) {
         this.builder = newBuilder;
     }
 
     getTower() {
-        if (this.tower) {
+        if (this.tower !== undefined) {
             return this.tower;
         }
     }
 
-    setTower(newTower: Tower | null) {
+    setTower(newTower: Tower | undefined) {
         this.tower = newTower;
     }
 
     doesTileHaveBuilder () {
-        if (this.builder) {
+        if (this.builder !== undefined) {
             return true;
         }
         else {
@@ -39,7 +39,7 @@ class Tile {
     }
 
     doesTileHaveTower () {
-        if (this.tower) {
+        if (this.tower !== undefined) {
             return true;
         }
         else {
@@ -48,7 +48,7 @@ class Tile {
     }
 
     isTileBlocked() {
-        if (this.tower) {
+        if (this.tower !== undefined) {
             if (this.tower.isTowerFull()) {
                 return true;
             }
@@ -64,13 +64,13 @@ class Tile {
 
 function printTile(tile: Tile) {
     let resultTile: String = "";
-    if (tile.tower) {
+    if (tile.tower !== undefined) {
         resultTile = `| TH: ${tile.tower.getHeight()}`;
     }
     else {
         resultTile = `| TH: 0`;
     }
-    if (tile.builder) {
+    if (tile.builder !== undefined) {
         resultTile += ` | BN: ${tile.builder.playerNum.toString()}`;
     }
     else {
@@ -82,8 +82,8 @@ function printTile(tile: Tile) {
 
 
 function hasPlayerWon(tile: Tile) {
-    if (tile.builder) {
-        if (tile.tower) {
+    if (tile.builder !== undefined) {
+        if (tile.tower !== undefined) {
             if (tile.tower.getHeight() == 3) {
                 return true;
             }

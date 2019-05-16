@@ -29,7 +29,7 @@ class Board {
 
     addAdjacenctTile(tileA: String, tileB: String) {
         let adjacencyTiles: String[] | undefined = new Array();
-        if (this.adjacencyMap.get(tileA)) {
+        if (this.adjacencyMap.get(tileA) !== undefined) {
             adjacencyTiles = this.adjacencyMap.get(tileA);
         }
         if (adjacencyTiles !== undefined) {
