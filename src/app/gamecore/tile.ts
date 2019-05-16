@@ -7,6 +7,7 @@ class Tile {
     tower: Tower | undefined = undefined;
 
     constructor() {
+        this.tower = new Tower();
     }
 
     getBuilder() {
@@ -48,17 +49,15 @@ class Tile {
     }
 
     isTileBlocked() {
+        if (this.doesTileHaveBuilder()) {
+            return true;
+        }
         if (this.tower !== undefined) {
             if (this.tower.isTowerFull()) {
                 return true;
             }
-            else {
-                return false;
-            }
         }
-        else {
-            return false;
-        }
+        return false;
     }
 }
 

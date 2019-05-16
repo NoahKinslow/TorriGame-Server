@@ -14,22 +14,22 @@ function setupNewGame(playerNameA: String, playerNameB: String) {
 }
 
 function createBoard(playerNameA: String, playerNameB: String) {
-    let builderA = new Builder(playerNameA);
-    let builderB = new Builder(playerNameB);
+    let builderA = new Builder("C1");
+    builderA.setPlayerName(playerNameA);
+    let builderB = new Builder("C5");
+    builderB.setPlayerName(playerNameB);
     let board = new Board();
     setupTiles(board);
     setupAdjacentTiles(board);
     // Set starting pos of builderA
-    builderA.setCurrentTile("C1");
     let tileC1 = board.getBoardMap().get("C1");
     if (tileC1 !== undefined) {
-        tileC1.setBuilder(builderA);        
+        tileC1.setBuilder(builderA);
     }
     // Set starting pos of builderB
-    builderB.setCurrentTile("C5");
     let tileC5 = board.getBoardMap().get("C5");
     if (tileC5 !== undefined) {
-        tileC5.setBuilder(builderA);        
+        tileC5.setBuilder(builderB);        
     }
 
     return board;
