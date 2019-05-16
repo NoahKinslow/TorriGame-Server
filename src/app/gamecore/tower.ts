@@ -39,8 +39,8 @@ class Tower {
 
     // Add a layer to the tower. True on success, False on failure
     addLayer() {
-        if (!this.isTowerFull) {
-            this.incrementHeight;
+        if (!this.isTowerFull()) {
+            this.incrementHeight();
             return true;
         }
         else {

@@ -49,7 +49,7 @@ class Tile {
 
     isTileBlocked() {
         if (this.tower) {
-            if (this.tower.isTowerFull) {
+            if (this.tower.isTowerFull()) {
                 return true;
             }
             else {
@@ -65,7 +65,13 @@ class Tile {
 function printTile(tile: Tile) {
     let resultTile: string = "";
     if (tile.tower) {
-        resultTile = `| TH: ${tile.tower.getHeight.toString()}`;
+        let height = tile.tower.getHeight();
+        if (height) {
+            resultTile = `| TH: ${height.toString()}`;
+        }        
+    }
+    else {
+        resultTile = `| TH: 0`;
     }
     if (tile.builder) {
         resultTile += ` | BN: ${tile.builder.playerNum.toString()}`;
@@ -74,6 +80,7 @@ function printTile(tile: Tile) {
         resultTile += ` | BN: 0`;
     }
 
+    return resultTile;
 }
 
 export { Tile, printTile };
