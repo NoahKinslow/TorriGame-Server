@@ -2,6 +2,16 @@ import { Builder } from './builder'
 import { Board } from './board'
 import { Tile, hasPlayerWon, isValidTileMove } from './tile'
 import { Tower } from './tower';
+import { GameState } from './gameState'
+
+function setupNewGame(playerNameA: String, playerNameB: String) {
+    let board = createBoard(playerNameA, playerNameB);    
+    let activePlayer: "builderA" | "builderB" = "builderA";
+    let randomNum = Math.floor(Math.random() * 2);
+    randomNum == 1 ? activePlayer = "builderA" : activePlayer = "builderB";
+    let gameState = new GameState(activePlayer, "movePhase", board);
+    return gameState;
+}
 
 function createBoard(playerNameA: String, playerNameB: String) {
     let builderA = new Builder(playerNameA);
@@ -102,7 +112,7 @@ function isValidMove(board: Board, builder: Builder, tileFromName: String, tileT
     // Check that the builder is on the correct tile
     if (builder.getCurrentTile() == tileFromName) {
         // Find tileTo in adjacencyMap
-        let adjacencyTiles = board.getAdjacencyMap().get(tileFromName);
+        let adjacencyTiles = getAdjacentTiles(board, tileFromName);
         if (adjacencyTiles !== undefined) {
             if (adjacencyTiles.includes(tileToName)) {
                 // Check height
@@ -138,7 +148,7 @@ function moveBuilder(board: Board, builder: Builder, tileFromName: String, tileT
 // Check that a build action is valid
 function isValidBuild(board: Board, builder: Builder, targetTileName: String) {
     let buildersTile = builder.getCurrentTile();
-    let adjacentTiles = board.getAdjacencyMap().get(buildersTile);
+    let adjacentTiles = getAdjacentTiles(board, buildersTile);
     // Make sure the builder is adjacent to targetTile
     if (adjacentTiles !== undefined) {
         if (adjacentTiles.includes(targetTileName)) {

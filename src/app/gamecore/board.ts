@@ -55,4 +55,25 @@ function printBoard(board: Board) {
     return resultBoard;
 }
 
-export { Board, printBoard };
+function findBuilders(board: Board) {
+    let builderA: Builder | undefined = undefined;
+    let builderB: Builder | undefined = undefined;
+    board.getBoardMap().forEach((tile) => {
+        if (builderA === undefined) {
+            if (tile.doesTileHaveBuilder()) {
+                builderA = tile.getBuilder();
+            }
+        }
+        else if (builderB === undefined) {
+            if (tile.doesTileHaveBuilder()) {
+                builderB = tile.getBuilder();
+            }
+        }
+        else {
+            
+        }
+    })
+    return [ builderA, builderB ];
+}
+
+export { Board, printBoard, findBuilders };
