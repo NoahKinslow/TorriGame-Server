@@ -38,6 +38,12 @@ class Board {
         }
     }
 
+    addAcjacentTiles(tileA: String, tiles: String[]) {
+        tiles.forEach((value) => {
+            this.addAdjacenctTile(tileA, value);
+        });
+    }
+
 }
 
 function printBoard(board: Board) {
