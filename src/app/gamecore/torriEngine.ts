@@ -1,6 +1,7 @@
 import { Builder } from './builder'
 import { Board } from './board'
 import { Tile, hasPlayerWon, isValidTileMove } from './tile'
+import { Tower } from './tower';
 
 function createBoard(playerNameA: String, playerNameB: String) {
     let builderA = new Builder(playerNameA);
@@ -132,6 +133,43 @@ function moveBuilder(board: Board, builder: Builder, tileFromName: String, tileT
         }
     }
     return false;
+}
+
+function isValidBuild(board: Board, builder: Builder, targetTileName: String) {
+    let buildersTile = builder.getCurrentTile();
+    let adjacentTiles = board.getAdjacencyMap().get(buildersTile);
+    // Make sure the builder is adjacent to targetTile
+    if (adjacentTiles !== undefined) {
+        if (adjacentTiles.includes(targetTileName)) {
+            // Check that the tile's tower height is not at max
+            let targetTile = board.getBoardMap().get(targetTileName);
+            if (targetTile) {
+                if (targetTile.doesTileHaveTower()) {
+                    return (!targetTile.isTileBlocked());
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function buildLayer(board: Board, tileName: String) {
+    // Get tile from map
+    let tile = board.getBoardMap().get(tileName);
+    if (tile !== undefined) {
+        // Check if the tile already has a tower
+        if (tile.doesTileHaveTower()) {
+            let tower = tile.getTower();
+            if (tower !== undefined) {
+                tower.addLayer();
+            }
+        }
+        else {
+            let tower = new Tower();
+            tower.addLayer();
+            tile.setTower(tower);
+        }
+    }
 }
 
 // Check if a player has won
