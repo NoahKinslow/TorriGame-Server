@@ -135,6 +135,7 @@ function moveBuilder(board: Board, builder: Builder, tileFromName: String, tileT
     return false;
 }
 
+// Check that a build action is valid
 function isValidBuild(board: Board, builder: Builder, targetTileName: String) {
     let buildersTile = builder.getCurrentTile();
     let adjacentTiles = board.getAdjacencyMap().get(buildersTile);
@@ -147,12 +148,16 @@ function isValidBuild(board: Board, builder: Builder, targetTileName: String) {
                 if (targetTile.doesTileHaveTower()) {
                     return (!targetTile.isTileBlocked());
                 }
+                else {
+                    return true;
+                }
             }
         }
     }
     return false;
 }
 
+// Add a layer to the tile's tower
 function buildLayer(board: Board, tileName: String) {
     // Get tile from map
     let tile = board.getBoardMap().get(tileName);
