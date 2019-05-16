@@ -80,4 +80,21 @@ function printTile(tile: Tile) {
     return resultTile;
 }
 
-export { Tile, printTile };
+
+function hasPlayerWon(tile: Tile) {
+    if (tile.builder) {
+        if (tile.tower) {
+            if (tile.tower.getHeight() == 3) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+export { Tile, printTile, hasPlayerWon };
