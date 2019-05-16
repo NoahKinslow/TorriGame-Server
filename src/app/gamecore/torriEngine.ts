@@ -18,6 +18,12 @@ function loadGame(gameStateStrings: (string | String[])[]) {
     if (gameState.getBoardState() !== undefined) {
         setupAdjacentTiles((gameState.getBoardState() as Board));
     }
+    return gameState;
+}
+
+function saveGame(gameState: GameState) {
+    let savedGameState = convertGameStateToJson(gameState);
+    return savedGameState;
 }
 
 function createBoard(playerNameA: String, playerNameB: String) {
