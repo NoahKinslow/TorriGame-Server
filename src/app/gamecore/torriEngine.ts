@@ -1,6 +1,6 @@
 import { Builder } from './builder'
 import { Board } from './board'
-import { Tile, hasPlayerWon } from './tile'
+import { Tile, hasPlayerWon, isValidTileMove } from './tile'
 
 function createBoard(playerNameA: String, playerNameB: String) {
     let builderA = new Builder(playerNameA);
@@ -103,7 +103,12 @@ function isValidMove(board: Board, builder: Builder, tileFromName: String, tileT
         // Find tileTo in adjacencyMap
         let adjacencyTiles = board.getAdjacencyMap().get(tileFromName);
         if (adjacencyTiles !== undefined) {
-            return adjacencyTiles.includes(tileToName);
+            if (adjacencyTiles.includes(tileToName)) {
+                // Check height
+                let tileFrom = board.getBoardMap().get(tileFromName);
+                let tileTo = board.getBoardMap().get(tileToName);
+                return isValidTileMove((tileFrom as Tile), (tileTo as Tile));
+            }
         }
     }
     return false;

@@ -80,7 +80,7 @@ function printTile(tile: Tile) {
     return resultTile;
 }
 
-
+// If the player's builder is on a tower of height 3 they won
 function hasPlayerWon(tile: Tile) {
     if (tile.builder !== undefined) {
         if (tile.tower !== undefined) {
@@ -97,4 +97,17 @@ function hasPlayerWon(tile: Tile) {
     }
 }
 
-export { Tile, printTile, hasPlayerWon };
+// Checks that a tile is not blocked and that the move is possible
+function isValidTileMove(tileFrom: Tile, tileTo: Tile) {
+    // Check that the tileTo is not blocked
+    if (tileTo.isTileBlocked()) {
+        return false;
+    }
+    // Check that the height difference is valid
+    if (tileTo.getTower() !== undefined && tileFrom.getTower() !== undefined) {
+        return (((tileTo.getTower() as Tower).getHeight() - (tileFrom.getTower() as Tower).getHeight()) <= 1);
+    }
+    return false;
+}
+
+export { Tile, printTile, hasPlayerWon, isValidTileMove };
