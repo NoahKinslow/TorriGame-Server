@@ -1,11 +1,11 @@
 //import { Tile } from './tile'
 
 class Builder {
-    playerName: string = "name";
+    playerName: String = "name";
     playerNum: number = 0;
-    currentTile: string;
+    currentTile: String;
 
-    constructor(tileName: string) {
+    constructor(tileName: String) {
         this.currentTile = tileName;
     }
 
@@ -13,7 +13,7 @@ class Builder {
         return this.playerName;
     }
 
-    setPlayerName(newName: string) {
+    setPlayerName(newName: String) {
         this.playerName = newName;
     }
 
@@ -29,7 +29,7 @@ class Builder {
         return this.currentTile;
     }
 
-    setCurrentTile(newTile: string) {
+    setCurrentTile(newTile: String) {
         this.currentTile = newTile;
     }
 }

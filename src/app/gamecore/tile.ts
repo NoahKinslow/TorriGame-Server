@@ -63,7 +63,7 @@ class Tile {
 }
 
 function printTile(tile: Tile) {
-    let resultTile: string = "";
+    let resultTile: String = "";
     if (tile.tower) {
         resultTile = `| TH: ${tile.tower.getHeight()}`;
     }
