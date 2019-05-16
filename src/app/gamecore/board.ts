@@ -19,6 +19,10 @@ class Board {
         this.boardMap.set(name, tile);
     }
 
+    getTile(name: String) {
+        return this.boardMap.get(name);
+    }
+
     getAdjacencyMap() {
         return this.adjacencyMap;
     }

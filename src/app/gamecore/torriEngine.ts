@@ -4,6 +4,106 @@ import { Tile, hasPlayerWon, isValidTileMove } from './tile'
 import { Tower } from './tower';
 import { GameState, convertGameStateToJson, convertJsonToGameState } from './gameState'
 
+// Take part of a player's turn using specified action and actionParms. Return results
+function takeTurnAction(gameState: GameState, action: "moveAction" | "buildAction", actionParms: String[]) {
+    let resultParms = new Array();
+    if (action === "moveAction") {
+        // Make sure the current phase is correct
+        if (gameState.getTurnState() === "movePhase") {
+            resultParms.push(takeMoveAction(gameState, actionParms));
+        }
+        else {
+            resultParms.push("Invalid Move");
+            resultParms.push("Not Move Phase");
+        }            
+    }
+    else {
+        // Make sure the current phase is correct
+        if (gameState.getTurnState() === "buildPhase") {
+            resultParms.push(takeBuildAction(gameState, actionParms));
+        }
+        else {
+            resultParms.push("Invalid Build");
+            resultParms.push("Not Build Phase");
+        }            
+    }
+    
+    return resultParms;
+}
+
+// Take a player's move phase using actionParms. Return results
+function takeMoveAction(gameState: GameState, actionParms: String[]) {
+    let resultParms = new Array();
+    let board = gameState.getBoardState();
+    let activeBuilder = gameState.getBuilder(gameState.getPlayerTurn());
+    let actionString = actionParms[0];
+
+    if (activeBuilder !== undefined && board !== undefined) {
+        // Check move is valid
+        if (isValidMove((board as Board), activeBuilder, activeBuilder.getCurrentTile(), actionString)) {
+            resultParms.push("Valid Move");
+            // Make move
+            moveBuilder((board as Board), activeBuilder, activeBuilder.getCurrentTile(), actionString);
+            // Check if the player has won
+            if (hasPlayerWon(board.getTile(activeBuilder.getCurrentTile()) as Tile)) {
+                resultParms.push("Player Won");
+                resultParms.push(gameState.getPlayerTurn());
+                resultParms.push(activeBuilder.getPlayerName());
+            }
+            else {
+                // Advance phase; push new phase to result
+                resultParms.push(advancePhase(gameState));
+                resultParms.push(gameState.getPlayerTurn());
+            }
+        }
+        else {
+            resultParms.push("Invalid Move");
+            resultParms.push("Move Not Possible");
+        }
+    }
+    return resultParms;
+}
+
+// Take a player's build phase using actionParms. Return results
+function takeBuildAction(gameState: GameState, actionParms: String[]) {
+    let resultParms = new Array();
+    let board = gameState.getBoardState();
+    let activeBuilder = gameState.getBuilder(gameState.getPlayerTurn());
+    let actionString = actionParms[0];
+
+    if (activeBuilder !== undefined) {
+        // Check build is valid
+        if (isValidBuild((board as Board), activeBuilder, actionString)) {
+            resultParms.push("Valid Build");
+            // Build
+            buildLayer((board as Board), actionString);
+            // Advance phase; push new phase to result
+            resultParms.push(advancePhase(gameState));
+            // Switch turns; push new player's turn to result
+            resultParms.push(switchTurns(gameState));
+        }
+        else {
+            resultParms.push("Invalid Build");
+            resultParms.push("Build Not Possible");
+        }
+    }
+    return resultParms;
+}
+
+// Switch the active player
+function switchTurns(gameState: GameState) {
+    let nextPlayer: "builderA" | "builderB" = gameState.getPlayerTurn() === "builderA" ? "builderB" : "builderA";
+    gameState.setPlayerTurn(nextPlayer);
+    return nextPlayer;
+}
+
+// Change the current phase to the next phase
+function advancePhase(gameState: GameState) {
+    let newPhase: "movePhase" | "buildPhase" = gameState.getTurnState() === "movePhase" ? "buildPhase" : "movePhase";
+    gameState.setTurnState(newPhase);
+    return newPhase;
+}
+
 function setupNewGame(playerNameA: String, playerNameB: String) {
     let board = createBoard(playerNameA, playerNameB);    
     let activePlayer: "builderA" | "builderB" = "builderA";
