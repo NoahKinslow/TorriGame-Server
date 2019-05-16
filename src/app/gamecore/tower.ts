@@ -6,9 +6,7 @@ class Tower {
     }
     
     getHeight() {
-        if (this.height) {
-            return this.height;
-        }
+        return this.height;
     }
 
     setHeight(newHeight: number = 0) {
