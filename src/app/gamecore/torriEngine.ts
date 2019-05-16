@@ -1,8 +1,8 @@
 import { Builder } from './builder'
 import { Board } from './board'
-import { Tile } from './tile'
+import { Tile, hasPlayerWon } from './tile'
 
-
+// Move builder from one tile to another. True on success, False on failure
 function moveBuilder(board: Board, builder: Builder, tileFromName: string, tileToName: string) {
     // Get tiles from map
     let tileFrom = board.getBoardMap().get(tileFromName);
@@ -18,8 +18,17 @@ function moveBuilder(board: Board, builder: Builder, tileFromName: string, tileT
             tileTo.setBuilder(builder);
             return true;
         }
-        else {
-            return false;
+    }
+    return false;
+}
+
+// Check if a player has won
+function isGameOver(board: Board, builder: Builder) {
+    let currentTileName = builder.getCurrentTile();
+    if (currentTileName) {
+        let currentTile = board.getBoardMap().get(currentTileName);
+        if (currentTile) {
+            return hasPlayerWon(currentTile);
         }
     }
     return false;
