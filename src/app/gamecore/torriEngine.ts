@@ -3,6 +3,10 @@ import { Board } from './board'
 import { Tile, hasPlayerWon } from './tile'
 
 
+function getAdjacentTiles(board: Board, tileFromName: String) {
+    let adjacencyTiles = board.getAdjacencyMap().get(tileFromName);
+    return adjacencyTiles;
+}
 
 // Ensure that a pending move is valid
 function isValidMove(board: Board, builder: Builder, tileFromName: String, tileToName: String) {
