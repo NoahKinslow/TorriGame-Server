@@ -3,28 +3,30 @@ import { Board, convertBoardToJson, convertJsonToBoard } from './board'
 import { Tile, hasPlayerWon, isValidTileMove } from './tile'
 import { Tower } from './tower';
 import { GameState, convertGameStateToJson, convertJsonToGameState } from './gameState'
+import * as constantStrings from './constantStrings'
 
 // Take part of a player's turn using specified action and actionParms. Return results
 function takeTurnAction(gameState: GameState, action: "moveAction" | "buildAction", actionParms: String[]) {
     let resultParms = new Array();
-    if (action === "moveAction") {
+    
+    if (action === constantStrings.moveAction) {
         // Make sure the current phase is correct
-        if (gameState.getTurnState() === "movePhase") {
+        if (gameState.getTurnState() === constantStrings.movePhase) {
             resultParms.push(takeMoveAction(gameState, actionParms));
         }
         else {
-            resultParms.push("Invalid Move");
-            resultParms.push("Not Move Phase");
+            resultParms.push(constantStrings.invalidMove);
+            resultParms.push(constantStrings.notMovePhase);
         }            
     }
     else {
         // Make sure the current phase is correct
-        if (gameState.getTurnState() === "buildPhase") {
+        if (gameState.getTurnState() === constantStrings.buildPhase) {
             resultParms.push(takeBuildAction(gameState, actionParms));
         }
         else {
-            resultParms.push("Invalid Build");
-            resultParms.push("Not Build Phase");
+            resultParms.push(constantStrings.invalidBuild);
+            resultParms.push(constantStrings.notBuildPhase);
         }            
     }
     
@@ -41,12 +43,12 @@ function takeMoveAction(gameState: GameState, actionParms: String[]) {
     if (activeBuilder !== undefined && board !== undefined) {
         // Check move is valid
         if (isValidMove((board as Board), activeBuilder, activeBuilder.getCurrentTile(), actionString)) {
-            resultParms.push("Valid Move");
+            resultParms.push(constantStrings.validMove);
             // Make move
             moveBuilder((board as Board), activeBuilder, activeBuilder.getCurrentTile(), actionString);
             // Check if the player has won
             if (hasPlayerWon(board.getTile(activeBuilder.getCurrentTile()) as Tile)) {
-                resultParms.push("Player Won");
+                resultParms.push(constantStrings.playerWon);
                 resultParms.push(gameState.getPlayerTurn());
                 resultParms.push(activeBuilder.getPlayerName());
             }
@@ -57,8 +59,8 @@ function takeMoveAction(gameState: GameState, actionParms: String[]) {
             }
         }
         else {
-            resultParms.push("Invalid Move");
-            resultParms.push("Move Not Possible");
+            resultParms.push(constantStrings.invalidMove);
+            resultParms.push(constantStrings.moveNotPossible);
         }
     }
     return resultParms;
@@ -74,7 +76,7 @@ function takeBuildAction(gameState: GameState, actionParms: String[]) {
     if (activeBuilder !== undefined) {
         // Check build is valid
         if (isValidBuild((board as Board), activeBuilder, actionString)) {
-            resultParms.push("Valid Build");
+            resultParms.push(constantStrings.validBuild);
             // Build
             buildLayer((board as Board), actionString);
             // Advance phase; push new phase to result
@@ -83,8 +85,8 @@ function takeBuildAction(gameState: GameState, actionParms: String[]) {
             resultParms.push(switchTurns(gameState));
         }
         else {
-            resultParms.push("Invalid Build");
-            resultParms.push("Build Not Possible");
+            resultParms.push(constantStrings.invalidBuild);
+            resultParms.push(constantStrings.buildNotPossible);
         }
     }
     return resultParms;
