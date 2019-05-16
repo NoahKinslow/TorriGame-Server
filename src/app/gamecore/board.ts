@@ -76,4 +76,27 @@ function findBuilders(board: Board) {
     return [ builderA, builderB ];
 }
 
-export { Board, printBoard, findBuilders };
+function convertBoardToJson(board: Board) {
+    let boardMap = board.getBoardMap();
+    let boardMapStrings: String[] = new Array();
+    boardMap.forEach((tile, tileName) => {
+        let jsonTile = JSON.stringify(tile);
+        boardMapStrings.push(`${tileName}:${jsonTile}`);
+    });
+    return boardMapStrings;
+}
+
+function convertJsonToBoard(strings: String[]) {
+    let boardMap = new Map<String, Tile>();
+    strings.forEach((value) => {
+        let tileName = value.substring(0, 2);
+        let tileString = value.substring(3);
+        let tile = JSON.parse(tileString);
+        boardMap.set(tileName, (tile as Tile));
+    });
+    let board = new Board();
+    board.setBoardMap(boardMap);
+    return board;
+}
+
+export { Board, printBoard, findBuilders, convertBoardToJson, convertJsonToBoard };

@@ -1,16 +1,23 @@
 import { Builder } from './builder'
-import { Board } from './board'
+import { Board, convertBoardToJson, convertJsonToBoard } from './board'
 import { Tile, hasPlayerWon, isValidTileMove } from './tile'
 import { Tower } from './tower';
-import { GameState } from './gameState'
+import { GameState, convertGameStateToJson, convertJsonToGameState } from './gameState'
 
 function setupNewGame(playerNameA: String, playerNameB: String) {
     let board = createBoard(playerNameA, playerNameB);    
     let activePlayer: "builderA" | "builderB" = "builderA";
     let randomNum = Math.floor(Math.random() * 2);
     randomNum == 1 ? activePlayer = "builderA" : activePlayer = "builderB";
-    let gameState = new GameState(activePlayer, "movePhase", board);
+    let gameState = new GameState(activePlayer, "movePhase", undefined, undefined, board);
     return gameState;
+}
+
+function loadGame(gameStateStrings: (string | String[])[]) {
+    let gameState = convertJsonToGameState(gameStateStrings);
+    if (gameState.getBoardState() !== undefined) {
+        setupAdjacentTiles((gameState.getBoardState() as Board));
+    }
 }
 
 function createBoard(playerNameA: String, playerNameB: String) {
