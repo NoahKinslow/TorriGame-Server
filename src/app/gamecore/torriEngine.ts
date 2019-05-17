@@ -1,9 +1,9 @@
-import { Builder } from './builder'
-import { Board, convertBoardToJson, convertJsonToBoard } from './board'
-import { Tile, hasPlayerWon, isValidTileMove } from './tile'
-import { Tower } from './tower';
-import { GameState, convertGameStateToJson, convertJsonToGameState } from './gameState'
-import * as constantStrings from './constantStrings'
+import { Builder } from './Builder'
+import { Board, convertBoardToJson, convertJsonToBoard } from './Board'
+import { Tile, hasPlayerWon, isValidTileMove } from './Tile'
+import { Tower } from './Tower';
+import { GameState, convertGameStateToJson, convertJsonToGameState } from './GameState'
+import * as constantStrings from './ConstantStrings'
 
 // Take part of a player's turn using specified action and actionParms. Return results
 function takeTurnAction(gameState: GameState, action: "moveAction" | "buildAction", actionParms: String[]) {

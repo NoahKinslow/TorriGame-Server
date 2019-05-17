@@ -1,5 +1,5 @@
-import { Board, findBuilders, convertBoardToJson, convertJsonToBoard } from "./board";
-import { Builder } from "./builder";
+import { Board, findBuilders, convertBoardToJson, convertJsonToBoard } from "./Board";
+import { Builder } from "./Builder";
 
 class GameState {
     boardState: Board | undefined;

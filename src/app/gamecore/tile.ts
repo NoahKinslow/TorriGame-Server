@@ -1,5 +1,5 @@
 import { Builder } from './builder'
-import { Tower } from './tower'
+import { Tower } from './Tower'
 
 class Tile {
     

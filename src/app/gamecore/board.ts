@@ -1,6 +1,6 @@
-import { Tile, printTile } from './tile'
-import { Tower } from './tower'
-import { Builder } from './builder'
+import { Tile, printTile } from './Tile'
+import { Tower } from './Tower'
+import { Builder } from './Builder'
 
 class Board {
     boardMap: Map<String, Tile> = new Map<String, Tile>();

@@ -2,11 +2,11 @@
   "name": "torricli",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/server.js",
+  "main": "lib/Server.js",
   "scripts": {
-    "start": "node lib/server.js",
-    "start:watch": "nodemon lib/server.js",
-    "start:debug": "nodemon --inspect lib/server.js",
+    "start": "node lib/Server.js",
+    "start:watch": "nodemon lib/Server.js",
+    "start:debug": "nodemon --inspect lib/Server.js",
     "clean": "rm -rf sessions",
     "clean:deep": "rm -rf lib sessions node_modules package-lock.json",
     "compile": "tsc",
@@ -19,13 +19,15 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "mongoose": "^5.4.19"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.8",
     "@types/express": "^4.11.1",
     "@types/morgan": "^1.7.35",
     "@types/node": "^9.4.1",
+    "@types/mongoose": "^5.3.23",
     "tslint": "^5.14.0",
     "typescript": "^2.7.1",
     "ts-node": "^8.1.0"
