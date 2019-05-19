@@ -1,5 +1,7 @@
 import * as mongoose from 'mongoose';
 
+import './db';
+
 const GameSchema = new mongoose.Schema ({
     gameID: {
         type: String,
@@ -11,15 +13,15 @@ const GameSchema = new mongoose.Schema ({
     players: [{
         type: String,
     }],
-    gameStateStrings: [{
+    gameStateStrings: {
         type: [String],
-    }], 
+    }, 
 });
 
 interface GameModel {
     gameID: String;
     players: String[];
-    gameStateStrings: (string | String[])[];
+    gameStateStrings: (string | String[]);
 }
 
 export interface GameData extends GameModel, mongoose.Document { }

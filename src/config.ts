@@ -11,3 +11,10 @@ export let dbOptions = {
   // user: 'userName',
   // pass: 'password',
 };
+
+// Session options for express-session
+export let sessionOptions = {
+  secret: 'famicom',
+  saveUninitialized: false,
+  resave: true,
+};
