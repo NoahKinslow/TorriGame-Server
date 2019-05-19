@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { GameData } from '../../models/GameData';
-import { createID } from '../../util';
+import { createID } from '../../Util';
 
 export async function webGetGameData(req: Request, res: Response) {
     const gameData = await getGameData(req.params.gameID);

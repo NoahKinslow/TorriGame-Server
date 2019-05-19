@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createID } from '../../util';
+import { createID } from '../../Util';
 import { Player } from '../../models/Player';
 
 export async function webGetPlayer(req: Request, res: Response) {
