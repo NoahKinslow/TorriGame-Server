@@ -4,12 +4,14 @@ const GameSchema = new mongoose.Schema ({
     gameID: {
         type: String,
         unique: true,
-        required: true,        
+        required: true,
+        minlength: 15,
+        maxlength: 15,
     },
     players: [{
         type: String,
     }],
-    GameStateStrings: [{
+    gameStateStrings: [{
         type: [String],
     }], 
 });
@@ -17,7 +19,7 @@ const GameSchema = new mongoose.Schema ({
 interface GameModel {
     gameID: String;
     players: String[];
-    GameStateStrings: (string | String[])[];
+    gameStateStrings: (string | String[])[];
 }
 
 export interface GameData extends GameModel, mongoose.Document { }
