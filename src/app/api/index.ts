@@ -4,6 +4,7 @@ import { webGetUser, webCreateUser, webCheckPassword, webCheckAccountAvailable }
 import { webGetPlayer, webUpdatePlayer } from './Player';
 import cors from 'cors';
 import bodyParser = require('body-parser');
+import { webGetLobby, webCreateLobby, webDeleteLobby } from './Lobby';
 
 export const router = Router();
 
@@ -11,6 +12,10 @@ export const router = Router();
 router.use(cors());
 
 const jsonParser = bodyParser.json();
+
+router.get('/lobbies/:username', webGetLobby);
+router.post('/lobbies/:username', webCreateLobby);
+router.delete('/lobbies/:username', webDeleteLobby);
 
 router.get('/gameData/:gameID', webGetGameData);
 router.post('/gameData/:gameID', jsonParser, webCreateGameData);
