@@ -16,12 +16,14 @@
   "author": "Noah Kinslow",
   "license": "GPL-3.0",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "morgan": "^1.9.0",
-    "mongoose": "^5.4.19",
+    "@types/cors": "^2.8.5",
     "@types/express-session": "^1.15.12",
-    "express-session": "^1.15.6"
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.5",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "mongoose": "^5.4.19",
+    "morgan": "^1.9.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.8",

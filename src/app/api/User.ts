@@ -26,13 +26,19 @@ export async function getUser(usernameString: String) {
     return user;    
 }
 
-export async function webCreateUser(req: Request, res: Response) {
+export async function webCreateUser(req: Request, res: Response) { 
+    console.log(req.body);
     const user = await createUser(req.params.username, req.body.password);
     
     res.json(user);
 }
 
 export async function createUser(usernameString: String, passwordString: String) {
+    if (usernameString === undefined || passwordString === undefined) {
+        console.log(`UsernameString: ${usernameString}`);
+        console.log(`PasswordString: ${passwordString}`);
+        return { message: "missing params" };
+    }
     const user = new User();
     user.username = usernameString;
     let player = await createPlayer(user.username);
@@ -59,7 +65,11 @@ export async function webCheckPassword(req: Request, res: Response) {
 }
 
 export async function checkPassword(usernameString: String, passwordString: String) {
-    const user = await User.findOne({ name: usernameString });
+    if (usernameString === undefined || passwordString === undefined) {
+        return { message: "missing params" };
+    }
+    const user = await User.findOne({ username: usernameString });
+    console.log(user);
     if (!user) {
         return false;  
     }

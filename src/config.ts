@@ -6,6 +6,7 @@ export let logFormat = 'dev';
 
 // Database connection information
 export let dbHost = 'localhost';
+export let dbHostPort = '27017';
 export let dbName = 'torriDB';
 export let dbOptions = {
   // user: 'userName',
