@@ -6,7 +6,7 @@ export async function webGetPlayer(req: Request, res: Response) {
     const player = await getPlayer(req.params.playerID);
     if (!player) {
         res.status(404);
-        res.json({ message: 'Player not found' });
+        res.json({ message: "Player not found" });
     }
     else {
         res.json(player);
@@ -35,7 +35,7 @@ export async function webUpdatePlayer(req: Request, res: Response) {
     const player = await updatePlayer(req.params.playerID, req.params.gameID);
     if (!player) {
         res.status(404);
-        res.json({ message: 'Player not found' });
+        res.json({ message: "Player not found" });
     }
     else {
         res.json(player);

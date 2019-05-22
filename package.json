@@ -1,5 +1,5 @@
 {
-  "name": "torricli",
+  "name": "torri-server",
   "version": "1.0.0",
   "description": "",
   "main": "lib/Server.js",
@@ -11,8 +11,7 @@
     "clean:deep": "rm -rf lib sessions node_modules package-lock.json",
     "compile": "tsc",
     "compile:watch": "tsc --watch",
-    "lint": "tslint -e node_modules -p tsconfig.json -t stylish",
-    "lint:fix": "tslint -e node_modules -p tsconfig.json --fix"
+    "lint": "tslint -e node_modules -p tsconfig.json -t stylish"
   },
   "author": "Noah Kinslow",
   "license": "GPL-3.0",
@@ -28,10 +27,11 @@
     "@types/body-parser": "^1.16.8",
     "@types/express": "^4.11.1",
     "@types/morgan": "^1.7.35",
-    "@types/node": "^9.4.1",
     "@types/mongoose": "^5.3.23",
     "tslint": "^5.14.0",
     "typescript": "^2.7.1",
-    "ts-node": "^8.1.0"
+    "ts-node": "^8.1.0",
+    "style-loader": "^0.23.1",
+    "ts-loader": "^5.3.3"
   }
 }

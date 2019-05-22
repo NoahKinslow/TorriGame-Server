@@ -7,14 +7,14 @@ import crypto from 'crypto';
 const pbkdf2P = util.promisify(crypto.pbkdf2);
 
 function encrypt(password: string, salt: Buffer): Promise<Buffer> {
-  return pbkdf2P(password, salt, 10000, 256, 'sha512');
+  return pbkdf2P(password, salt, 10000, 256, "sha512");
 }
 
 export async function webGetUser(req: Request, res: Response) {
     const user = await getUser(req.params.username);
     if (!user) {
         res.status(404);
-        res.json({ message: 'User not found' });
+        res.json({ message: "User not found" });
     }
     else {
         res.json(user);
@@ -51,4 +51,37 @@ export async function createUser(usernameString: String, passwordString: String)
 
     await user.save();
     return user;    
+}
+
+export async function webCheckPassword(req: Request, res: Response) {
+    const checkResult = await checkPassword(req.body.username, req.body.password);
+    res.json({ match: checkResult });
+}
+
+export async function checkPassword(usernameString: String, passwordString: String) {
+    const user = await User.findOne({ name: usernameString });
+    if (!user) {
+        return false;  
+    }
+    else if (user.password.equals(await encrypt(passwordString.toString(), user.salt))) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+export async function webCheckAccountAvailable(req: Request, res: Response) {
+    const checkResult = await checkAccountAvailable(req.body.username);
+    res.json({ available: checkResult });
+}
+
+export async function checkAccountAvailable(usernameString: String) {
+    const user = await getUser(usernameString);
+    if (user) {
+        return false;
+    }
+    else {
+        return true;
+    }
 }
