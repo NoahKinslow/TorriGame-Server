@@ -21,7 +21,7 @@ const GameSchema = new mongoose.Schema ({
 interface GameModel {
     gameID: String;
     players: String[];
-    gameStateStrings: (string | String[]);
+    gameStateStrings: (string | String[])[];
 }
 
 export interface GameData extends GameModel, mongoose.Document { }

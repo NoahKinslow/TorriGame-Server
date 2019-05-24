@@ -6,13 +6,13 @@ import { GameState, convertGameStateToJson, convertJsonToGameState } from './Gam
 import * as constantStrings from './ConstantStrings'
 
 // Take part of a player's turn using specified action and actionParms. Return results
-function takeTurnAction(gameState: GameState, action: "moveAction" | "buildAction", actionParms: String[]) {
-    let resultParms = new Array();
+export function takeTurnAction(gameState: GameState, action: "moveAction" | "buildAction", actionParms: String[]) {
+    let resultParms: String[] = new Array();
     
     if (action === constantStrings.moveAction) {
         // Make sure the current phase is correct
         if (gameState.getTurnState() === constantStrings.movePhase) {
-            resultParms.push(takeMoveAction(gameState, actionParms));
+            resultParms.push(...takeMoveAction(gameState, actionParms));
         }
         else {
             resultParms.push(constantStrings.invalidMove);
@@ -22,7 +22,7 @@ function takeTurnAction(gameState: GameState, action: "moveAction" | "buildActio
     else {
         // Make sure the current phase is correct
         if (gameState.getTurnState() === constantStrings.buildPhase) {
-            resultParms.push(takeBuildAction(gameState, actionParms));
+            resultParms.push(...takeBuildAction(gameState, actionParms));
         }
         else {
             resultParms.push(constantStrings.invalidBuild);
@@ -34,8 +34,8 @@ function takeTurnAction(gameState: GameState, action: "moveAction" | "buildActio
 }
 
 // Take a player's move phase using actionParms. Return results
-function takeMoveAction(gameState: GameState, actionParms: String[]) {
-    let resultParms = new Array();
+export function takeMoveAction(gameState: GameState, actionParms: String[]) {
+    let resultParms: String[] = new Array();
     let board = gameState.getBoardState();
     let activeBuilder = gameState.getBuilder(gameState.getPlayerTurn());
     let actionString = actionParms[0];
@@ -67,8 +67,8 @@ function takeMoveAction(gameState: GameState, actionParms: String[]) {
 }
 
 // Take a player's build phase using actionParms. Return results
-function takeBuildAction(gameState: GameState, actionParms: String[]) {
-    let resultParms = new Array();
+export function takeBuildAction(gameState: GameState, actionParms: String[]) {
+    let resultParms: String[] = new Array();
     let board = gameState.getBoardState();
     let activeBuilder = gameState.getBuilder(gameState.getPlayerTurn());
     let actionString = actionParms[0];
@@ -93,20 +93,20 @@ function takeBuildAction(gameState: GameState, actionParms: String[]) {
 }
 
 // Switch the active player
-function switchTurns(gameState: GameState) {
+export function switchTurns(gameState: GameState) {
     let nextPlayer: "builderA" | "builderB" = gameState.getPlayerTurn() === "builderA" ? "builderB" : "builderA";
     gameState.setPlayerTurn(nextPlayer);
     return nextPlayer;
 }
 
 // Change the current phase to the next phase
-function advancePhase(gameState: GameState) {
+export function advancePhase(gameState: GameState) {
     let newPhase: "movePhase" | "buildPhase" = gameState.getTurnState() === "movePhase" ? "buildPhase" : "movePhase";
     gameState.setTurnState(newPhase);
     return newPhase;
 }
 
-function setupNewGame(playerNameA: String, playerNameB: String) {
+export function setupNewGame(playerNameA: String, playerNameB: String) {
     let board = createBoard(playerNameA, playerNameB);    
     let activePlayer: "builderA" | "builderB" = "builderA";
     let randomNum = Math.floor(Math.random() * 2);
@@ -115,7 +115,7 @@ function setupNewGame(playerNameA: String, playerNameB: String) {
     return gameState;
 }
 
-function loadGame(gameStateStrings: (string | String[])[]) {
+export function loadGame(gameStateStrings: (string | String[])[]) {
     let gameState = convertJsonToGameState(gameStateStrings);
     if (gameState.getBoardState() !== undefined) {
         setupAdjacentTiles((gameState.getBoardState() as Board));
@@ -123,12 +123,12 @@ function loadGame(gameStateStrings: (string | String[])[]) {
     return gameState;
 }
 
-function saveGame(gameState: GameState) {
+export function saveGame(gameState: GameState) {
     let savedGameState = convertGameStateToJson(gameState);
     return savedGameState;
 }
 
-function createBoard(playerNameA: String, playerNameB: String) {
+export function createBoard(playerNameA: String, playerNameB: String) {
     let builderA = new Builder("C1");
     builderA.setPlayerName(playerNameA);
     let builderB = new Builder("C5");
@@ -150,7 +150,7 @@ function createBoard(playerNameA: String, playerNameB: String) {
     return board;
 }
 
-function setupAdjacentTiles(board: Board) {
+export function setupAdjacentTiles(board: Board) {
     // A Column (1st Column from the left) (Left most column)
     // Top left corner
     board.addAcjacentTiles("A1", ["A2", "B1", "B2"]);
@@ -189,7 +189,7 @@ function setupAdjacentTiles(board: Board) {
     board.addAcjacentTiles("E5", ["E4", "D4", "D5"]);
 }
 
-function setupTiles(board: Board) {
+export function setupTiles(board: Board) {
     board.addTile("A1", new Tile());
     board.addTile("A2", new Tile());
     board.addTile("A3", new Tile());
@@ -217,13 +217,13 @@ function setupTiles(board: Board) {
     board.addTile("E5", new Tile());
 }
 
-function getAdjacentTiles(board: Board, tileFromName: String) {
+export function getAdjacentTiles(board: Board, tileFromName: String) {
     let adjacencyTiles = board.getAdjacencyMap().get(tileFromName);
     return adjacencyTiles;
 }
 
 // Ensure that a pending move is valid
-function isValidMove(board: Board, builder: Builder, tileFromName: String, tileToName: String) {
+export function isValidMove(board: Board, builder: Builder, tileFromName: String, tileToName: String) {
     // Check that the builder is on the correct tile
     if (builder.getCurrentTile() == tileFromName) {
         // Find tileTo in adjacencyMap
@@ -241,7 +241,7 @@ function isValidMove(board: Board, builder: Builder, tileFromName: String, tileT
 }
 
 // Move builder from one tile to another. True on success, False on failure
-function moveBuilder(board: Board, builder: Builder, tileFromName: String, tileToName: String) {
+export function moveBuilder(board: Board, builder: Builder, tileFromName: String, tileToName: String) {
     // Get tiles from map
     let tileFrom = board.getBoardMap().get(tileFromName);
     let tileTo = board.getBoardMap().get(tileToName);
@@ -261,7 +261,7 @@ function moveBuilder(board: Board, builder: Builder, tileFromName: String, tileT
 }
 
 // Check that a build action is valid
-function isValidBuild(board: Board, builder: Builder, targetTileName: String) {
+export function isValidBuild(board: Board, builder: Builder, targetTileName: String) {
     let buildersTile = builder.getCurrentTile();
     let adjacentTiles = getAdjacentTiles(board, buildersTile);
     // Make sure the builder is adjacent to targetTile
@@ -283,7 +283,7 @@ function isValidBuild(board: Board, builder: Builder, targetTileName: String) {
 }
 
 // Add a layer to the tile's tower
-function buildLayer(board: Board, tileName: String) {
+export function buildLayer(board: Board, tileName: String) {
     // Get tile from map
     let tile = board.getBoardMap().get(tileName);
     if (tile !== undefined) {
@@ -303,7 +303,7 @@ function buildLayer(board: Board, tileName: String) {
 }
 
 // Check if a player has won
-function isGameOver(board: Board, builder: Builder) {
+export function isGameOver(board: Board, builder: Builder) {
     let currentTileName = builder.getCurrentTile();
     if (currentTileName !== undefined) {
         let currentTile = board.getBoardMap().get(currentTileName);

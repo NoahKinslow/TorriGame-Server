@@ -2,6 +2,22 @@ import { Request, Response } from 'express';
 import { Lobby } from '../../models/Lobby';
 import { getPlayer } from './Player';
 
+export async function webGetLobbies(req: Request, res: Response) {
+    const lobbies = await getLobbies();
+    if (!lobbies) {
+        res.status(404);
+        res.json({ message: "Lobbies not found" });
+    }
+    else {
+        res.json(lobbies);
+    }
+}
+
+export async function getLobbies() {
+    const lobbies = await Lobby.find({});
+    return lobbies;
+}
+
 export async function webGetLobby(req: Request, res: Response) {
     const lobby = await getLobby(req.params.username);
     if (!lobby) {
