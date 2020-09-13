@@ -135,4 +135,4 @@ function decodeTile(tileToDecode: String) {
     return decodedTile;
 }
 
-export { Tile, printTile, hasPlayerWon, isValidTileMove };
+export { Tile, printTile, hasPlayerWon, isValidTileMove, encodeTile, decodeTile };
