@@ -16,24 +16,27 @@
   "author": "Noah Kinslow",
   "license": "GPL-3.0",
   "dependencies": {
-    "@types/cors": "^2.8.5",
-    "@types/express-session": "^1.15.12",
     "body-parser": "^1.18.2",
     "cors": "^2.8.5",
     "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.4.19",
     "morgan": "^1.9.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.8",
+    "@types/cors": "^2.8.7",
     "@types/express": "^4.11.1",
-    "@types/morgan": "^1.7.35",
+    "@types/express-handlebars": "0.0.30",
+    "@types/express-session": "^1.15.12",
+    "@types/handlebars": "^4.0.36",
+    "@types/jsonwebtoken": "^8.3.9",
     "@types/mongoose": "^5.3.23",
+    "@types/morgan": "^1.7.35",
+    "@types/node": "^9.4.1",
     "tslint": "^5.14.0",
-    "typescript": "^2.7.1",
-    "ts-node": "^8.1.0",
-    "style-loader": "^0.23.1",
-    "ts-loader": "^5.3.3"
+    "typescript": "^2.7.1"
   }
 }
