@@ -1,4 +1,4 @@
-import { Tile, printTile } from './Tile'
+import { Tile, printTile, encodeTile, decodeTile } from './Tile'
 import { Tower } from './Tower'
 import { Builder } from './Builder'
 
@@ -103,4 +103,39 @@ function convertJsonToBoard(strings: String[]) {
     return board;
 }
 
-export { Board, printBoard, findBuilders, convertBoardToJson, convertJsonToBoard };
+function encodeBoard(boardToEncode: Board) {
+    let boardMap = boardToEncode.getBoardMap();
+    let boardMapStrings: String[] = new Array();
+    boardMap.forEach((tile, tileName) => {
+        let encodedTile = encodeTile(tile);
+        boardMapStrings.push(encodedTile);
+    });
+}
+
+function decodeBoard(boardToDecode: String[]) {
+    let boardMap = new Map<String, Tile>();
+
+    // Values to loop through for tile names
+    let tileNameLetters: string[] = [ "A", "B", "C", "D", "E" ];
+    let tileNameNumbers: string[] = [ "1", "2", "3", "4", "5" ];
+    let tileNameL: number = 0;
+    let tileNameN: number = 0;
+
+    // Decode each tile in String array representing the board's game state
+    for (let index = 0; index < boardToDecode.length; index++) {
+        let tileName = tileNameLetters[tileNameL] + tileNameNumbers[tileNameN];
+        let tile = decodeTile(boardToDecode[index]);        
+        boardMap.set(tileName, (tile as Tile));
+        tileNameL++;
+        if (index % 5 == 0) {
+            tileNameL = 0;
+            tileNameN++;
+        }
+    }
+
+    let board = new Board();
+    board.setBoardMap(boardMap);
+    return board;
+}
+
+export { Board, printBoard, findBuilders, convertBoardToJson, convertJsonToBoard, encodeBoard, decodeBoard };
