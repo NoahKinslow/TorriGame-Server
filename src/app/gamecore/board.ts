@@ -106,10 +106,13 @@ function convertJsonToBoard(strings: String[]) {
 function encodeBoard(boardToEncode: Board) {
     let boardMap = boardToEncode.getBoardMap();
     let boardMapStrings: String[] = new Array();
+
     boardMap.forEach((tile, tileName) => {
         let encodedTile = encodeTile(tile);
         boardMapStrings.push(encodedTile);
     });
+    
+    return boardMapStrings;
 }
 
 function decodeBoard(boardToDecode: String[]) {
