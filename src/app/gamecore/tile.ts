@@ -109,4 +109,30 @@ function isValidTileMove(tileFrom: Tile, tileTo: Tile) {
     return false;
 }
 
+// Encodes a tile into a string format of (TileHeight|IsBuilderPresent?)
+function encodeTile(tileToEncode: Tile) {
+    let encodedTile: String = "";
+    if (tileToEncode.tower !== undefined) {
+        encodedTile += tileToEncode.tower.getHeight().toString();
+    }
+    /*
+    if (tileToEncode.doesTileHaveBuilder()) {
+        encodedTile += "Y";
+    }
+    else {
+        encodedTile += "N";
+    }
+    */
+    return encodedTile;
+}
+
+// Decodes a tile from a string in the format of (TileHeight|IsBuilderPresent?)
+function decodeTile(tileToDecode: String) {
+    let decodedTile: Tile = new Tile();
+    let tower: Tower = new Tower();
+    tower.setHeight(parseInt(tileToDecode.substr(0, 1)));
+    decodedTile.setTower(tower);
+    return decodedTile;
+}
+
 export { Tile, printTile, hasPlayerWon, isValidTileMove };
