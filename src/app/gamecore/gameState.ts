@@ -1,4 +1,4 @@
-import { Board, findBuilders, convertBoardToJson, convertJsonToBoard } from "./Board";
+import { Board, findBuilders, convertBoardToJson, convertJsonToBoard, encodeBoard, decodeBoard } from "./Board";
 import { Builder } from "./Builder";
 
 class GameState {
@@ -67,7 +67,8 @@ class GameState {
 function convertGameStateToJson(gameState: GameState) {
     let builders = [ gameState.getBuilder("builderA"), gameState.getBuilder("builderB") ];
 
-    let boardStateStrings = convertBoardToJson((gameState.getBoardState() as Board));    
+    //let boardStateStrings = convertBoardToJson((gameState.getBoardState() as Board));
+    let boardStateStrings = encodeBoard(gameState.getBoardState() as Board);
     let buildersStrings = JSON.stringify(builders);
     let playerTurnString = JSON.stringify(gameState.getPlayerTurn());
     let turnStateString = JSON.stringify(gameState.getTurnState());
@@ -88,7 +89,8 @@ function convertJsonToGameState(strings: (string | String[])[]) {
     let playerTurnString: String = (strings[2] as string);
     let turnStateString: String = (strings[3] as string);
 
-    let board: Board = convertJsonToBoard(boardStateStrings);
+    //let board: Board = convertJsonToBoard(boardStateStrings);
+    let board: Board = decodeBoard(boardStateStrings);
     let builders: Builder[] = JSON.parse(buildersStrings.toString());
     let playerTurn: "builderA" | "builderB" = JSON.parse(playerTurnString.toString());
     let turnState: "movePhase" | "buildPhase" = JSON.parse(turnStateString.toString());
