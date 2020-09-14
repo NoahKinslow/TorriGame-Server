@@ -31,7 +31,7 @@ class Board {
         this.adjacencyMap = newAdjacencyMap;
     }
 
-    addAdjacenctTile(tileA: String, tileB: String) {
+    addAdjacentTile(tileA: String, tileB: String) {
         let adjacencyTiles: String[] | undefined = new Array();
         if (this.adjacencyMap.get(tileA) !== undefined) {
             adjacencyTiles = this.adjacencyMap.get(tileA);
@@ -42,9 +42,9 @@ class Board {
         }
     }
 
-    addAcjacentTiles(tileA: String, tiles: String[]) {
+    addAdjacentTiles(tileA: String, tiles: String[]) {
         tiles.forEach((value) => {
-            this.addAdjacenctTile(tileA, value);
+            this.addAdjacentTile(tileA, value);
         });
     }
 

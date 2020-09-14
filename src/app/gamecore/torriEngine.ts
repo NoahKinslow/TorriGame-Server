@@ -153,40 +153,40 @@ export function createBoard(playerNameA: String, playerNameB: String) {
 export function setupAdjacentTiles(board: Board) {
     // A Column (1st Column from the left) (Left most column)
     // Top left corner
-    board.addAcjacentTiles("A1", ["A2", "B1", "B2"]);
+    board.addAdjacentTiles("A1", ["A2", "B1", "B2"]);
     // Left most side
-    board.addAcjacentTiles("A2", ["A1", "B1", "B2", "B3", "A3"]);
-    board.addAcjacentTiles("A3", ["A2", "B2", "B3", "B4", "A4"]);
-    board.addAcjacentTiles("A4", ["A3", "B3", "B4", "B5", "A5"]);
+    board.addAdjacentTiles("A2", ["A1", "B1", "B2", "B3", "A3"]);
+    board.addAdjacentTiles("A3", ["A2", "B2", "B3", "B4", "A4"]);
+    board.addAdjacentTiles("A4", ["A3", "B3", "B4", "B5", "A5"]);
     // Bottom left corner
-    board.addAcjacentTiles("A5", ["A4", "B4", "B5"]);
+    board.addAdjacentTiles("A5", ["A4", "B4", "B5"]);
     // B Column (2nd Column from the left)
-    board.addAcjacentTiles("B1", ["A1", "A2", "B2", "C2", "C1"]);
-    board.addAcjacentTiles("B2", ["A1", "A2", "A3", "B3", "C3", "C2", "C1", "B1"]);
-    board.addAcjacentTiles("B3", ["A2", "A3", "A4", "B4", "C4", "C3", "C2", "B2"]);
-    board.addAcjacentTiles("B4", ["A3", "A4", "A5", "B5", "C5", "C4", "C3", "B3"]);
-    board.addAcjacentTiles("B5", ["A5", "A4", "B4", "C4", "C5"]);
+    board.addAdjacentTiles("B1", ["A1", "A2", "B2", "C2", "C1"]);
+    board.addAdjacentTiles("B2", ["A1", "A2", "A3", "B3", "C3", "C2", "C1", "B1"]);
+    board.addAdjacentTiles("B3", ["A2", "A3", "A4", "B4", "C4", "C3", "C2", "B2"]);
+    board.addAdjacentTiles("B4", ["A3", "A4", "A5", "B5", "C5", "C4", "C3", "B3"]);
+    board.addAdjacentTiles("B5", ["A5", "A4", "B4", "C4", "C5"]);
     // C Column (3rd Column from the left) (Middle column)
-    board.addAcjacentTiles("C1", ["B1", "B2", "C2", "D2", "D1"]);
-    board.addAcjacentTiles("C2", ["B1", "B2", "B3", "C3", "D3", "D2", "D1", "C1"]);
-    board.addAcjacentTiles("C3", ["B2", "B3", "B4", "C4", "D4", "D3", "D2", "C2"]);
-    board.addAcjacentTiles("C4", ["B3", "B4", "B5", "C5", "D5", "D4", "D3", "C3"]);
-    board.addAcjacentTiles("C5", ["B5", "B4", "C4", "D4", "D5"]);
+    board.addAdjacentTiles("C1", ["B1", "B2", "C2", "D2", "D1"]);
+    board.addAdjacentTiles("C2", ["B1", "B2", "B3", "C3", "D3", "D2", "D1", "C1"]);
+    board.addAdjacentTiles("C3", ["B2", "B3", "B4", "C4", "D4", "D3", "D2", "C2"]);
+    board.addAdjacentTiles("C4", ["B3", "B4", "B5", "C5", "D5", "D4", "D3", "C3"]);
+    board.addAdjacentTiles("C5", ["B5", "B4", "C4", "D4", "D5"]);
     // D Column (4th Column from the left)
-    board.addAcjacentTiles("D1", ["C1", "C2", "D2", "E2", "E1"]);
-    board.addAcjacentTiles("D2", ["C1", "C2", "C3", "D3", "E3", "E2", "E1", "D1"]);
-    board.addAcjacentTiles("D3", ["C2", "C3", "C4", "D4", "E4", "E3", "E2", "D2"]);
-    board.addAcjacentTiles("D4", ["C3", "C4", "C5", "D5", "E5", "E4", "E3", "D3"]);
-    board.addAcjacentTiles("D5", ["C5", "C4", "D4", "E4", "E5"]);
+    board.addAdjacentTiles("D1", ["C1", "C2", "D2", "E2", "E1"]);
+    board.addAdjacentTiles("D2", ["C1", "C2", "C3", "D3", "E3", "E2", "E1", "D1"]);
+    board.addAdjacentTiles("D3", ["C2", "C3", "C4", "D4", "E4", "E3", "E2", "D2"]);
+    board.addAdjacentTiles("D4", ["C3", "C4", "C5", "D5", "E5", "E4", "E3", "D3"]);
+    board.addAdjacentTiles("D5", ["C5", "C4", "D4", "E4", "E5"]);
     // E Column (5th Column from the left) (Right most column)
     // Top right corner
-    board.addAcjacentTiles("E1", ["E2", "D1", "D2"]);
+    board.addAdjacentTiles("E1", ["E2", "D1", "D2"]);
     // Right most side
-    board.addAcjacentTiles("E2", ["E1", "D1", "D2", "D3", "E3"]);
-    board.addAcjacentTiles("E3", ["E2", "D2", "D3", "D4", "E4"]);
-    board.addAcjacentTiles("E4", ["E3", "D3", "D4", "D5", "E5"]);
+    board.addAdjacentTiles("E2", ["E1", "D1", "D2", "D3", "E3"]);
+    board.addAdjacentTiles("E3", ["E2", "D2", "D3", "D4", "E4"]);
+    board.addAdjacentTiles("E4", ["E3", "D3", "D4", "D5", "E5"]);
     // Bottom right corner
-    board.addAcjacentTiles("E5", ["E4", "D4", "D5"]);
+    board.addAdjacentTiles("E5", ["E4", "D4", "D5"]);
 }
 
 export function setupTiles(board: Board) {
