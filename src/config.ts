@@ -11,6 +11,8 @@ export let dbName = 'torriDB';
 export let dbOptions = {
   // user: 'userName',
   // pass: 'password',
+  useNewUrlParser: true,
+  useCreateIndex: true
 };
 
 // Session options for express-session
