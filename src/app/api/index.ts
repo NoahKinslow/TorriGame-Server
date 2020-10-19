@@ -3,7 +3,9 @@ import { webGetGameData, webCreateGameData, webUpdateGameData } from '../api/Gam
 import { webGetUser, webCreateUser, webCheckPassword, webCheckAccountAvailable } from './User';
 import { webGetPlayer, webUpdatePlayer } from './Player';
 import cors from 'cors';
-import bodyParser = require('body-parser');
+//import bodyParser = require('body-parser');
+//import { bodyParser } from 'body-parser';
+import * as bodyParser from 'body-parser';
 import { webGetLobby, webCreateLobby, webDeleteLobby, webGetLobbies } from './Lobby';
 
 export const router = Router();
