@@ -5,7 +5,7 @@ import { setupNewGame, takeTurnAction } from '../gamecore/TorriEngine';
 import { convertGameStateToJson, convertJsonToGameState } from '../gamecore/GameState';
 import { getPlayer } from './Player';
 import { getUser } from './User';
-import { moveAction, invalidMove } from '../gamecore/ConstantStrings';
+import { moveAction, invalidMove, buildAction } from '../gamecore/ConstantStrings';
 
 export async function webGetGameData(req: Request, res: Response) {
     const gameData = await getGameData(req.params.gameID);
@@ -92,6 +92,32 @@ export async function makeMoveOnGameData(gameIDString: String, actionParms: Stri
     if (gameData) {
         let rawGameState = convertJsonToGameState(gameData.gameStateStrings);
         let results = takeTurnAction(rawGameState, moveAction, actionParms);
+        if (results.includes(invalidMove)) {
+            
+        }
+        else {
+            updateGameData(gameIDString, convertGameStateToJson(rawGameState));
+        }
+        return gameData;
+    }
+}
+
+export async function webMakeBuildOnGameData(req: Request, res: Response) {
+    if (req.body.actionParms === undefined) {
+        res.status(404);
+        res.json({ message: 'actionParms missing' });
+    }
+    else {
+        const gameData = await makeBuildOnGameData(req.params.gameID, req.body.actionParms);
+        res.json(gameData);
+    }    
+}
+
+export async function makeBuildOnGameData(gameIDString: String, actionParms: String[]) {
+    const gameData = await getGameData(gameIDString);
+    if (gameData) {
+        let rawGameState = convertJsonToGameState(gameData.gameStateStrings);
+        let results = takeTurnAction(rawGameState, buildAction, actionParms);
         if (results.includes(invalidMove)) {
             
         }
