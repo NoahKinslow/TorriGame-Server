@@ -111,11 +111,13 @@ function encodeBoard(boardToEncode: Board) {
         let encodedTile = encodeTile(tile);
         boardMapStrings.push(encodedTile);
     });
+
+    let boardMapString = boardMapStrings.join();
     
-    return boardMapStrings;
+    return boardMapString;
 }
 
-function decodeBoard(boardToDecode: String[]) {
+function decodeBoard(boardToDecode: string) {
     let boardMap = new Map<String, Tile>();
 
     // Values to loop through for tile names
@@ -124,8 +126,10 @@ function decodeBoard(boardToDecode: String[]) {
     let tileNameL: number = 0;
     let tileNameN: number = 0;
 
+    let boardToDecodeArray = boardToDecode.split(",");
+
     // Decode each tile in String array representing the board's game state
-    for (let index = 0; index < boardToDecode.length; index++) {
+    for (let index = 0; index < boardToDecodeArray.length; index++) {
         let tileName = tileNameLetters[tileNameL] + tileNameNumbers[tileNameN];
         let tile = decodeTile(boardToDecode[index]);        
         boardMap.set(tileName, (tile as Tile));

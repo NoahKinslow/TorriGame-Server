@@ -84,7 +84,7 @@ function convertGameStateToJson(gameState: GameState) {
 }
 
 function convertJsonToGameState(strings: (string | String[])[]) {
-    let boardStateStrings: String[] = (strings[0] as String[]);
+    let boardStateStrings: string = (strings[0] as string);
     let buildersStrings: String = (strings[1] as string);
     let playerTurnString: String = (strings[2] as string);
     let turnStateString: String = (strings[3] as string);
