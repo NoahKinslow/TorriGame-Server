@@ -56,3 +56,5 @@ export async function updatePlayer(playerIDString: String, gameIDString: String)
         return player;
     }
 }
+
+// missing delete player

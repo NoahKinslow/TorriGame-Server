@@ -127,3 +127,5 @@ export async function makeBuildOnGameData(gameIDString: String, actionParms: Str
         return gameData;
     }
 }
+
+// missing delete gamedata

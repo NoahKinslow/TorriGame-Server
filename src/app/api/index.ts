@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { webGetGameData, webCreateGameData, webUpdateGameData } from '../api/GameData';
-import { webGetUser, webCreateUser, webCheckPassword, webCheckAccountAvailable } from './User';
-import { webGetPlayer, webUpdatePlayer } from './Player';
+
+import { webGetGameData, webCreateGameData, webUpdateGameData, 
+    webGetUser, webCreateUser, webCheckPassword, webCheckAccountAvailable, 
+    webGetPlayer, webUpdatePlayer,
+    webGetLobby, webCreateLobby, webDeleteLobby, webGetLobbies } from './internal'
+
 import cors from 'cors';
-//import bodyParser = require('body-parser');
-//import { bodyParser } from 'body-parser';
 import * as bodyParser from 'body-parser';
-import { webGetLobby, webCreateLobby, webDeleteLobby, webGetLobbies } from './Lobby';
 
 export const router = Router();
 
