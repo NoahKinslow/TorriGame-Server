@@ -1,7 +1,6 @@
-import { Board, findBuilders, convertBoardToJson, convertJsonToBoard, encodeBoard, decodeBoard } from "./Board";
-import { Builder } from "./Builder";
+import { Builder, Board, encodeBoard, decodeBoard, findBuilders} from "./internal";
 
-class GameState {
+export class GameState {
     boardState: Board | undefined;
     builderA: Builder | undefined;
     builderB: Builder | undefined;
@@ -15,8 +14,8 @@ class GameState {
         if (buildA === undefined && buildB === undefined) {
             let builders = findBuilders(board);
             if (builders !== undefined) {
-                this.builderA = builders[0];
-                this.builderB = builders[1];
+               this.builderA = builders[0];
+              this.builderB = builders[1];
             }    
         }
         else {
@@ -64,10 +63,9 @@ class GameState {
     }
 }
 
-function convertGameStateToJson(gameState: GameState) {
+export function convertGameStateToJson(gameState: GameState) {
     let builders = [ gameState.getBuilder("builderA"), gameState.getBuilder("builderB") ];
 
-    //let boardStateStrings = convertBoardToJson((gameState.getBoardState() as Board));
     let boardStateStrings = encodeBoard(gameState.getBoardState() as Board);
     let buildersStrings = JSON.stringify(builders);
     let playerTurnString = JSON.stringify(gameState.getPlayerTurn());
@@ -83,13 +81,12 @@ function convertGameStateToJson(gameState: GameState) {
     return resultStrings;
 }
 
-function convertJsonToGameState(strings: (string | String[])[]) {
+export function convertJsonToGameState(strings: (string | String[])[]) {
     let boardStateStrings: string = (strings[0] as string);
     let buildersStrings: String = (strings[1] as string);
     let playerTurnString: String = (strings[2] as string);
     let turnStateString: String = (strings[3] as string);
 
-    //let board: Board = convertJsonToBoard(boardStateStrings);
     let board: Board = decodeBoard(boardStateStrings);
     let builders: Builder[] = JSON.parse(buildersStrings.toString());
     let playerTurn: "builderA" | "builderB" = JSON.parse(playerTurnString.toString());
@@ -98,5 +95,3 @@ function convertJsonToGameState(strings: (string | String[])[]) {
 
     return gameState;
 }
-
-export { GameState, convertGameStateToJson, convertJsonToGameState }

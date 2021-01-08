@@ -1,4 +1,4 @@
-class Tower {
+export class Tower {
     height: number = 0;
 
     constructor() {
@@ -48,12 +48,10 @@ class Tower {
 
 }
 
-function printTower(tower: Tower) {
+export function printTower(tower: Tower) {
     let resultTower = tower.getHeight();
     if (resultTower) {
         return resultTower.toString();
     }
     return "";    
 }
-
-export { Tower, printTower };

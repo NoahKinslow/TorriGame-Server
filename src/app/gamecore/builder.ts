@@ -1,6 +1,5 @@
-//import { Tile } from './tile'
 
-class Builder {
+export class Builder {
     playerName: String = "name";
     playerNum: number = 0;
     currentTile: String;
@@ -34,8 +33,6 @@ class Builder {
     }
 }
 
-function printBuilder(builder: Builder) {
+export function printBuilder(builder: Builder) {
     return builder.playerNum.toString();
 }
-
-export { Builder, printBuilder };

@@ -1,4 +1,3 @@
-
 export const moveAction = "moveAction";
 export const buildAction = "buildAction";
 
@@ -16,3 +15,6 @@ export const notMovePhase = "Not Move Phase";
 export const notBuildPhase = "Not Build Phase";
 
 export const playerWon = "Player Won";
+
+export const builderA = "builderA";
+export const builderB = "builderB";

@@ -1,8 +1,6 @@
-import { Tile, printTile, encodeTile, decodeTile } from './Tile'
-import { Tower } from './Tower'
-import { Builder } from './Builder'
+import { Tile, printTile, encodeTile, decodeTile, Builder } from './internal';
 
-class Board {
+export class Board {
     boardMap: Map<String, Tile> = new Map<String, Tile>();
 
     adjacencyMap: Map<String, String[]> = new Map<String, String[]>();
@@ -50,7 +48,8 @@ class Board {
 
 }
 
-function printBoard(board: Board) {
+// Print the board in a readable format
+export function printBoard(board: Board) {
     let resultBoard: String[] = new Array();
     board.boardMap.forEach((value, key) => {
         let resultTile = `| TN: ${key} ${printTile(value)}`
@@ -59,7 +58,8 @@ function printBoard(board: Board) {
     return resultBoard;
 }
 
-function findBuilders(board: Board) {
+// Loop through tiles to find builders
+export function findBuilders(board: Board) {
     let builderA: Builder | undefined = undefined;
     let builderB: Builder | undefined = undefined;
     board.getBoardMap().forEach((tile) => {
@@ -80,7 +80,7 @@ function findBuilders(board: Board) {
     return [ builderA, builderB ];
 }
 
-function convertBoardToJson(board: Board) {
+export function convertBoardToJson(board: Board) {
     let boardMap = board.getBoardMap();
     let boardMapStrings: String[] = new Array();
     boardMap.forEach((tile, tileName) => {
@@ -90,7 +90,7 @@ function convertBoardToJson(board: Board) {
     return boardMapStrings;
 }
 
-function convertJsonToBoard(strings: String[]) {
+export function convertJsonToBoard(strings: String[]) {
     let boardMap = new Map<String, Tile>();
     strings.forEach((value) => {
         let tileName = value.substring(0, 2);
@@ -103,7 +103,8 @@ function convertJsonToBoard(strings: String[]) {
     return board;
 }
 
-function encodeBoard(boardToEncode: Board) {
+// Encode board as a series of tile heights in a comma separated string
+export function encodeBoard(boardToEncode: Board) {
     let boardMap = boardToEncode.getBoardMap();
     let boardMapStrings: String[] = new Array();
 
@@ -117,7 +118,8 @@ function encodeBoard(boardToEncode: Board) {
     return boardMapString;
 }
 
-function decodeBoard(boardToDecode: string) {
+// Decode board from a series of tile heights
+export function decodeBoard(boardToDecode: string) {
     let boardMap = new Map<String, Tile>();
 
     // Values to loop through for tile names
@@ -144,5 +146,3 @@ function decodeBoard(boardToDecode: string) {
     board.setBoardMap(boardMap);
     return board;
 }
-
-export { Board, printBoard, findBuilders, convertBoardToJson, convertJsonToBoard, encodeBoard, decodeBoard };
