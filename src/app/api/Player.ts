@@ -57,4 +57,23 @@ export async function updatePlayer(playerIDString: String, gameIDString: String)
     }
 }
 
-// missing delete player
+export async function webDeletePlayer(req: Request, res: Response) {
+    const result = deletePlayer(req.body.playerID);
+    if (result) {
+        res.json('Player deleted');
+    }
+    else {
+        res.json('Player not found');
+    }
+}
+
+export async function deletePlayer(playerIDString: String) {
+    const player = await getPlayer(playerIDString);
+    if (player) {
+        player.remove();
+        return true;
+    }
+    else {
+        return false;
+    }
+}

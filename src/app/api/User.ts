@@ -96,5 +96,27 @@ export async function checkAccountAvailable(usernameString: String) {
     }
 }
 
+
+export async function webDeleteUser(req: Request, res: Response) {
+    const result = deleteUser(req.body.username);
+    if (result) {
+        res.json({user: 'Deleted'});
+    }
+    else {
+        res.json({user: 'Not found'});
+    }
+    
+}
+
+export async function deleteUser(usernameString: String) {
+    const user = await getUser(usernameString);
+    if (user) {
+        user.remove();
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 // missing update user
-// missing delete user
