@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { User } from '../../models/User';
-import { createPlayer } from './Player';
+import { createPlayer, getPlayer} from './internal';
 import util from 'util';
 import crypto from 'crypto';
 
@@ -37,7 +37,7 @@ export async function createUser(usernameString: String, passwordString: String)
     if (usernameString === undefined || passwordString === undefined) {
         console.log(`UsernameString: ${usernameString}`);
         console.log(`PasswordString: ${passwordString}`);
-        return { message: "missing params" };
+        return { message: "Missing params" };
     }
     const user = new User();
     user.username = usernameString;
@@ -66,7 +66,7 @@ export async function webCheckPassword(req: Request, res: Response) {
 
 export async function checkPassword(usernameString: String, passwordString: String) {
     if (usernameString === undefined || passwordString === undefined) {
-        return { message: "missing params" };
+        return { message: "Missing params" };
     }
     const user = await User.findOne({ username: usernameString });
     console.log(user);
@@ -111,6 +111,8 @@ export async function webDeleteUser(req: Request, res: Response) {
 export async function deleteUser(usernameString: String) {
     const user = await getUser(usernameString);
     if (user) {
+        const player = await getPlayer(user.playerID);
+        player?.remove();
         user.remove();
         return true;
     }
@@ -119,4 +121,79 @@ export async function deleteUser(usernameString: String) {
     }
 }
 
-// missing update user
+export async function webUpdateUser(req: Request, res: Response) {
+    const results = await updateUser(req.body.targetUser, req.body.user);
+    res.json(results);
+}
+
+export async function updateUser(targetUser: string, user: {username: string, password: string, playername: string}) {
+    const results = [];
+
+    if (user.username) {
+        if (await updateUserName(targetUser, user.username)) {
+            results.push('Updated username');
+            // If username changed, cannot use targetUser
+            results.push(... await modifiedUsernameUpdate(user));
+        }
+        else {
+            results.push('Username not updated');
+        }
+    }
+    else if (user.password) {
+        results.push(await updateUserPassword(targetUser, user.password) ? 'Updated password' : 'Password not updated');
+        
+        if (user.playername) {
+            results.push(await updateUserPlayer(user.username, user.playername) ? 'Updated playername' : 'Playername not updated');
+        }
+    }
+    else if (user.playername) {
+        results.push(await updateUserPlayer(targetUser, user.playername) ? 'Updated playername' : 'Playername not updated');
+    }
+
+    return results;
+}
+
+export async function modifiedUsernameUpdate(user: {username: string, password: string, playername: string}) {
+    const results = [];
+    if (user.password) {
+        results.push(await updateUserPassword(user.username, user.password) ? 'Updated password' : 'Password not updated');
+    }
+    if (user.playername) {
+        results.push(await updateUserPlayer(user.username, user.playername) ? 'Updated playername' : 'Playername not updated');
+    }
+    return results;
+}
+
+export async function updateUserName(targetUsername: string, newUsername: string) {
+    const user = await getUser(targetUsername);
+    if (user) {
+        user.username = newUsername;
+        user.save();
+        return true;
+    }
+    return false;
+}
+
+export async function updateUserPlayer(targetUsername: string, newPlayername: string) {
+    const user = await getUser(targetUsername);
+    if (user) {
+        const player = await getPlayer(user.playerID);
+        if (player) {
+            player.username = newPlayername;
+            player.save();
+            return true;
+        }
+    }
+    return false;
+}
+
+export async function updateUserPassword(targetUsername: string, newPassword: string) {
+    const user = await getUser(targetUsername);
+    if (user) {
+        user.salt = crypto.randomBytes(8);
+        user.password = await encrypt(newPassword, user.salt);
+        user.save();
+        return true;
+    }
+    return false;
+}
