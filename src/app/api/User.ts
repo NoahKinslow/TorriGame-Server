@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { User } from '../../models/User';
-import { createPlayer, getPlayer} from './internal';
+import { createPlayer, getPlayer, constantStrings} from './internal';
 import util from 'util';
 import crypto from 'crypto';
 
@@ -109,10 +109,13 @@ export async function webDeleteUser(req: Request, res: Response) {
 }
 
 export async function deleteUser(usernameString: String) {
-    const user = await getUser(usernameString);
+    const user = await User.findOne({ username: usernameString });
+    //const user = await getUser(usernameString);
     if (user) {
         const player = await getPlayer(user.playerID);
-        player?.remove();
+        if (player) {
+            player.remove();
+        }        
         user.remove();
         return true;
     }
@@ -126,40 +129,43 @@ export async function webUpdateUser(req: Request, res: Response) {
     res.json(results);
 }
 
-export async function updateUser(targetUser: string, user: {username: string, password: string, playername: string}) {
+export async function updateUser(targetUser: string, user: {username?: string, password?: string, playername?: string}) {
     const results = [];
 
     if (user.username) {
         if (await updateUserName(targetUser, user.username)) {
-            results.push('Updated username');
+            results.push(constantStrings.USERNAME_MODIFIED);
             // If username changed, cannot use targetUser
-            results.push(... await modifiedUsernameUpdate(user));
+            const username = user.username;
+            const password = user.password;
+            const playername = user.playername;
+            results.push(... await modifiedUsernameUpdate({username, password, playername}));
         }
         else {
-            results.push('Username not updated');
+            results.push(constantStrings.USERNAME_NOT_MODIFIED);
         }
     }
     else if (user.password) {
-        results.push(await updateUserPassword(targetUser, user.password) ? 'Updated password' : 'Password not updated');
+        results.push(await updateUserPassword(targetUser, user.password) ? constantStrings.PASSWORD_MODIFIED : constantStrings.PASSWORD_NOT_MODIFIED);
         
         if (user.playername) {
-            results.push(await updateUserPlayer(user.username, user.playername) ? 'Updated playername' : 'Playername not updated');
+            results.push(await updateUserPlayer(targetUser, user.playername) ? constantStrings.PLAYERNAME_MODIFIED : constantStrings.PLAYERNAME_NOT_MODIFIED);
         }
     }
     else if (user.playername) {
-        results.push(await updateUserPlayer(targetUser, user.playername) ? 'Updated playername' : 'Playername not updated');
+        results.push(await updateUserPlayer(targetUser, user.playername) ? constantStrings.PLAYERNAME_MODIFIED : constantStrings.PLAYERNAME_NOT_MODIFIED);
     }
 
     return results;
 }
 
-export async function modifiedUsernameUpdate(user: {username: string, password: string, playername: string}) {
+export async function modifiedUsernameUpdate(user: {username: string, password?: string, playername?: string}) {
     const results = [];
     if (user.password) {
-        results.push(await updateUserPassword(user.username, user.password) ? 'Updated password' : 'Password not updated');
+        results.push(await updateUserPassword(user.username, user.password) ? constantStrings.PASSWORD_MODIFIED : constantStrings.PASSWORD_NOT_MODIFIED);
     }
     if (user.playername) {
-        results.push(await updateUserPlayer(user.username, user.playername) ? 'Updated playername' : 'Playername not updated');
+        results.push(await updateUserPlayer(user.username, user.playername) ? constantStrings.PLAYERNAME_MODIFIED : constantStrings.PLAYERNAME_NOT_MODIFIED);
     }
     return results;
 }
